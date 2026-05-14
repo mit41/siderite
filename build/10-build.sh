@@ -54,6 +54,8 @@ echo "::group:: Run additional scripts"
 
 ./ctx/build/20-cosmic-desktop.sh
 
+./ctx/build/30-install-akmods.sh
+
 # Install packages using dnf5
 # Example: dnf5 install -y tmux
 
