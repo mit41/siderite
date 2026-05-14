@@ -56,7 +56,8 @@ echo "::group:: Install Additional Utilities"
 # Install additional utilities that work well with COSMIC
 dnf5 install -y \
     flatpak \
-    xdg-desktop-portal-cosmic
+    xdg-desktop-portal-cosmic \
+    gnome-keyring
 
 echo "Additional utilities installed"
 echo "::endgroup::"
