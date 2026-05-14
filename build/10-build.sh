@@ -28,6 +28,15 @@ echo "::endgroup::"
 
 echo "::group:: Copy Custom Files"
 
+# Copy system_files
+rsync -rvK /ctx/system_files/ /
+
+# Install brew
+rsync -rvK /ctx/oci/brew/ /
+systemctl preset brew-setup.service && \
+systemctl preset brew-update.timer && \
+systemctl preset brew-upgrade.timer
+
 # Copy Brewfiles to standard location
 mkdir -p /usr/share/ublue-os/homebrew/
 cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
@@ -41,7 +50,9 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
 echo "::endgroup::"
 
-echo "::group:: Install Packages"
+echo "::group:: Run additional scripts"
+
+./ctx/build/20-cosmic-desktop.sh
 
 # Install packages using dnf5
 # Example: dnf5 install -y tmux

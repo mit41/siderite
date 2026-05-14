@@ -23,37 +23,11 @@ set -eoux pipefail
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh
 
-echo "::group:: Remove GNOME Desktop"
-
-# Remove GNOME Shell and related packages
-dnf5 remove -y \
-    gnome-shell \
-    gnome-shell-extension* \
-    gnome-terminal \
-    gnome-software \
-    gnome-control-center \
-    nautilus \
-    gdm
-
-echo "GNOME desktop removed"
-echo "::endgroup::"
-
 echo "::group:: Install COSMIC Desktop"
 
-# Install COSMIC desktop from System76's COPR
-# Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "ryanabx/cosmic-epoch" \
+dnf5 install -y \
     cosmic-session \
-    cosmic-greeter \
-    cosmic-comp \
-    cosmic-panel \
-    cosmic-launcher \
-    cosmic-applets \
-    cosmic-settings \
-    cosmic-files \
-    cosmic-edit \
-    cosmic-term \
-    cosmic-workspaces
+    cosmic-edit
 
 echo "COSMIC desktop installed successfully"
 echo "::endgroup::"
@@ -81,12 +55,17 @@ echo "::group:: Install Additional Utilities"
 
 # Install additional utilities that work well with COSMIC
 dnf5 install -y \
-    kitty \
     flatpak \
     xdg-desktop-portal-cosmic
 
 echo "Additional utilities installed"
 echo "::endgroup::"
 
+echo "::group:: Install additional wallpapers"
+
+cp -rT /ctx/oci/artwork/ /usr/share/backgrounds
+
+echo "Additional wallpapers installed"
+echo "::endgroup::"
+
 echo "COSMIC desktop installation complete!"
-echo "After booting, select 'COSMIC' session at the login screen"

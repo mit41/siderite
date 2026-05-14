@@ -1,3 +1,9 @@
 [[customizations.filesystem]]
 mountpoint = "/"
 minsize = "20 GiB"
+
+# This is only for test purposes of the image and will not be in the final iso.
+[[customizations.user]]
+name = "iron"
+password = "meteor"
+groups = ["wheel"]
