@@ -53,7 +53,7 @@ echo "::endgroup::"
 echo "::group:: Run additional scripts"
 
 ./ctx/build/20-cosmic-desktop.sh
-
+./ctx/build/21-packages.sh
 ./ctx/build/30-install-akmods.sh
 
 # Install packages using dnf5
