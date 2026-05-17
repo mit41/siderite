@@ -58,7 +58,8 @@ dnf5 install -y \
     flatpak \
     xdg-desktop-portal-cosmic \
     gnome-keyring \
-    gnome-keyring-pam
+    gnome-keyring-pam \
+    openssh-askpass
 
 echo "Additional utilities installed"
 echo "::endgroup::"
