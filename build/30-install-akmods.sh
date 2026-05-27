@@ -14,7 +14,7 @@ for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-
 done
 
 # Fetch Common AKMODS & Kernel RPMS
-skopeo copy --retry-times 3 docker://ghcr.io/ublue-os/akmods:coreos-testing-"$(rpm -E %fedora)"-"${KERNEL}" dir:/tmp/akmods
+skopeo copy --retry-times 3 docker://ghcr.io/ublue-os/akmods:main-"$(rpm -E %fedora)"-"${KERNEL}" dir:/tmp/akmods
 AKMODS_TARGZ=$(jq -r '.layers[].digest' </tmp/akmods/manifest.json | cut -d : -f 2)
 tar -xvzf /tmp/akmods/"$AKMODS_TARGZ" -C /tmp/
 mv /tmp/rpms/* /tmp/akmods/
