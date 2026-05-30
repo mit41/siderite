@@ -10,7 +10,7 @@ COPY --from=ghcr.io/ublue-os/brew:latest@sha256:837fd51428e23fbe68b9d35651b0b415
 COPY --from=ghcr.io/ublue-os/bluefin-wallpapers-gnome:latest@sha256:e4d74fa741ce9ff03a6a60440a58c31cef6c0fc145182357d243580ba239f810 / /oci/artwork/bluefin
 COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /oci/artwork/aurora
 
-FROM ghcr.io/ublue-os/base-main:latest@sha256:e9e2d963c35141e090978f1c8f794868cb2d7026a873c65d6f285817a7e48969
+FROM ghcr.io/ublue-os/base-main:latest@sha256:24471b75dcb16e0643d4455e5e6a94db13539ffbd9c7f4244e7df5df0041aa83
 
 ### /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
