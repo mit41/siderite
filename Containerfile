@@ -8,7 +8,6 @@ COPY system_files /system_files
 COPY --from=ghcr.io/projectbluefin/common:latest@sha256:a2d19cfffe082ec7e5bdee03e12ae55b592870e51ade33a44c04898eb423167f /system_files /oci/common
 COPY --from=ghcr.io/ublue-os/brew:latest@sha256:9449d3ce4bec06b815dcf33bc5547cc76204317a59df01c511c63063679ec90a /system_files /oci/brew
 COPY --from=ghcr.io/ublue-os/bluefin-wallpapers-gnome:latest@sha256:e4d74fa741ce9ff03a6a60440a58c31cef6c0fc145182357d243580ba239f810 / /oci/artwork/bluefin
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /oci/artwork/aurora
 
 FROM ghcr.io/ublue-os/base-main:latest@sha256:3de26340c5ccc08e01a3abf65d0fbb590cab13d1afd71a64a4fb68117ea26880
 
