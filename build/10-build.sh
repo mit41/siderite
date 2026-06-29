@@ -2,13 +2,6 @@
 
 set -eoux pipefail
 
-###############################################################################
-# Main Build Script
-###############################################################################
-# This script follows the @ublue-os/bluefin pattern for build scripts.
-# It uses set -eoux pipefail for strict error handling and debugging.
-###############################################################################
-
 # Source helper functions
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh
@@ -48,28 +41,17 @@ find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >>
 mkdir -p /etc/flatpak/preinstall.d/
 cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 
+# copy additional wallpapers
+cp -rT /ctx/oci/artwork/ /usr/share/backgrounds
+
 echo "::endgroup::"
 
 echo "::group:: Run additional scripts"
 
-./ctx/build/20-cosmic-desktop.sh
-./ctx/build/21-packages.sh
+./ctx/build/20-packages.sh
 ./ctx/build/30-install-akmods.sh
 ./ctx/build/40-cleanup.sh
-
-# Install packages using dnf5
-# Example: dnf5 install -y tmux
-
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
-
-echo "::endgroup::"
-
-echo "::group:: System Configuration"
-
-# Enable/disable systemd services
-systemctl enable podman.socket
-# Example: systemctl mask unwanted-service
+./ctx/build/50-initramfs.sh
 
 echo "::endgroup::"
 

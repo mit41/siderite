@@ -9,6 +9,7 @@ systemctl --global enable podman-auto-update.timer
 systemctl enable brew-setup.service
 systemctl enable input-remapper.service
 systemctl enable tailscaled.service
+systemctl enable ublue-system-setup.service
 
 # TODO: Install the ublue os flatpak preinstall package
 # systemctl enable flatpak-preinstall.service
@@ -36,3 +37,15 @@ for repo in negativo17-fedora-multimedia tailscale fedora-cisco-openh264; do
         sed -i 's@enabled=1@enabled=0@g' "/etc/yum.repos.d/${repo}.repo"
     fi
 done
+
+# symlink uutils-coretutils
+# TODO: figure out how to use alongside GNU coreutils
+# for prog in $(/usr/bin/uutils-coreutils --list); do
+#     ln -sr "/usr/bin/uutils-coreutils" "/usr/bin/uutils-${prog}"
+#     # Keep cp/mv/rm from GNU coreutils — uutils has unresolved TOCTOU issues.
+#     # See projectbluefin/common#290.
+#     case "${prog}" in
+#         cp|mv|rm) continue ;;
+#     esac
+#     ln -sr "/usr/bin/uutils-coreutils" "/usr/bin/${prog}"
+# done

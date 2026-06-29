@@ -25,12 +25,14 @@ FEDORA_PACKAGES=(
     cryfs
     davfs2
     ddcutil
+    distrobox
     evtest
     fastfetch
     firewall-config
     fish
     foo2zjs
     fuse-encfs
+    fzf
     gcc
     gcc-c++
     git-credential-libsecret
@@ -42,6 +44,7 @@ FEDORA_PACKAGES=(
     input-remapper
     iwd
     jetbrains-mono-fonts-all
+    just
     krb5-workstation
     libgda
     libgda-sqlite
@@ -71,6 +74,7 @@ FEDORA_PACKAGES=(
     tmux
     usbip
     usbmuxd
+    uutils-coreutils
     waypipe
     wl-clipboard
     xdg-terminal-exec
@@ -91,22 +95,23 @@ dnf -y install --enablerepo='tailscale-stable' tailscale
 copr_install_isolated "che/nerd-fonts" "nerd-fonts"
 
 # From ublue-os/packages
-copr_install_isolated "ublue-os/packages" "uupd"
-
-# Version-specific COPR packages
-# case "$FEDORA_MAJOR_VERSION" in
-#    42)
-        # bazaar and uupd from ublue-os/packages
-        # copr_install_isolated "ublue-os/packages" "bazaar" "uupd"
-        # ;;
-    # 43)
-        # bazaar from ublue-os/packages
-        # copr_install_isolated "ublue-os/packages" "bazaar"
-        # ;;
-# esac
+copr_install_isolated "ublue-os/packages" \
+    "uupd" \
+    "ublue-os-just" \
+    "ublue-os-libvirt-workarounds" \
+    "ublue-os-luks" \
+    "ublue-os-media-automount-udev" \
+    "ublue-os-selinux-workarounds" \
+    "ublue-setup-services" \
+    "ublue-recipes" \
+    "ublue-polkit-rules" \
+    "ublue-os-update-services" \
+    "ublue-os-udev-rules" \
+    "bazaar"
 
 # Packages to exclude - common to all versions
 EXCLUDED_PACKAGES=(
+    cosmic-store
     cosign
     fedora-bookmarks
     fedora-chromium-config
