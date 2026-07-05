@@ -9,7 +9,7 @@ COPY --from=ghcr.io/projectbluefin/common:latest@sha256:be5dc61c44afa86cbc5167b3
 COPY --from=ghcr.io/ublue-os/brew:latest@sha256:9449d3ce4bec06b815dcf33bc5547cc76204317a59df01c511c63063679ec90a /system_files /oci/brew
 COPY --from=ghcr.io/ublue-os/bluefin-wallpapers-gnome:latest@sha256:e4d74fa741ce9ff03a6a60440a58c31cef6c0fc145182357d243580ba239f810 / /oci/artwork/bluefin
 
-FROM quay.io/fedora-ostree-desktops/cosmic-atomic:44@sha256:1721d8972be613ac4dcda77b1b710a981fe24c25ab3950b04952bb685fbb380c
+FROM quay.io/fedora-ostree-desktops/cosmic-atomic:44@sha256:e2372bafd85d93a265a084e6fcb24d124daecc7bbdd0ce768aff1b0bf3f7b991
 
 ARG IMAGE_NAME="siderite"
 ARG IMAGE_VENDOR="mit41"
