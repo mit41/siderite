@@ -2,7 +2,7 @@ export IMAGE_NAME := env("IMAGE_NAME", "siderite")
 export DEFAULT_TAG := env("DEFAULT_TAG", "stable")
 export PODMAN := env("PODMAN", "podman")
 export REPO_ORG := env("GITHUB_REPOSITORY_OWNER", "mit41")
-export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest@sha256:903c01d110b8533f8891f07c69c0ba2377f8d4bc7e963311082b7028c04d529d")
+export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest@sha256:2b52843ea2bfda73b0a08d97e76b734393b1d3a804681b9fabb26723bd3a2f0b")
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
