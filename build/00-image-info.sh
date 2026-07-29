@@ -114,6 +114,9 @@ if [[ -f "${OS_RELEASE}" ]]; then
 
     mv "${TMP_FILE}" "${OS_RELEASE}"
 
+    # reapply correct permissions to the os-release file
+    chmod 774 "${OS_RELEASE}"
+
     echo "Customized ${OS_RELEASE}"
     echo "  VERSION: ${CUSTOM_VERSION}"
 fi
