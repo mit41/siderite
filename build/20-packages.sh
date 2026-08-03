@@ -109,9 +109,12 @@ copr_install_isolated "ublue-os/packages" \
     "ublue-os-udev-rules" \
     "bazaar"
 
+copr_install_isolated "scottames/ghostty" "ghostty"
+
 # Packages to exclude - common to all versions
 EXCLUDED_PACKAGES=(
     cosmic-store
+    cosmic-term
     cosign
     fedora-bookmarks
     fedora-chromium-config
