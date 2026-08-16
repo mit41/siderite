@@ -1,9 +1,4 @@
 # vim: set ft=make :
-#######################
-### custom-system.just
-#######################
-## Example system configuration commands
-## These are simplified examples adapted from Bluefin
 
 # Run a system benchmark (requires stress-ng from Homebrew)
 [group('System')]
@@ -28,6 +23,39 @@ benchmark:
     pushd $(mktemp -d) > /dev/null
     stress-ng --matrix 0 -t 1m --times
     popd > /dev/null
+
+# Setup symlink of rust-coreutils to /usr/local/bin if they are not already setup otherwise rm them.
+[group('System')]
+rust-coreutils:
+    #!/usr/bin/bash
+
+    gnu_detected=$(ls --version 2> /dev/null | head -n1)
+    echo $gnu_detected
+    if [[ "$gnu_detected" =~ GNU ]]; then
+        echo "GNU coreutils detected."
+                    echo "Symlinking uutils programs to /usr/local/bin"
+            for prog in $(/usr/bin/uutils-coreutils --list); do
+                sudo ln -sr /usr/bin/uutils-coreutils "/usr/local/bin/uutils-${prog}"
+                # Keep cp/mv/rm from GNU coreutils — uutils has unresolved TOCTOU issues.
+                # See projectbluefin/common#290.
+                case "${prog}" in
+                    cp|mv|rm) continue ;;
+                esac
+                sudo ln -sr "/usr/bin/uutils-coreutils" "/usr/local/bin/${prog}"
+            done
+    else
+        echo "Removing uutils symlinks."
+
+        for prog in $(/usr/bin/uutils-coreutils --list); do
+            sudo rm "/usr/local/bin/uutils-${prog}"
+            # Keep cp/mv/rm from GNU coreutils — uutils has unresolved TOCTOU issues.
+            # See projectbluefin/common#290.
+            case "${prog}" in
+                cp|mv|rm) continue ;;
+            esac
+            sudo rm "/usr/local/bin/${prog}"
+        done
+    fi
 
 # Configure docker and libvirt groups for development
 [group('System')]
