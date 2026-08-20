@@ -1,9 +1,4 @@
 # vim: set ft=make :
-#######################
-### custom-system.just
-#######################
-## Example system configuration commands
-## These are simplified examples adapted from Bluefin
 
 # Run a system benchmark (requires stress-ng from Homebrew)
 [group('System')]
@@ -29,6 +24,39 @@ benchmark:
     stress-ng --matrix 0 -t 1m --times
     popd > /dev/null
 
+# Setup symlink of rust-coreutils to /usr/local/bin if they are not already setup otherwise rm them.
+[group('System')]
+rust-coreutils:
+    #!/usr/bin/bash
+
+    gnu_detected=$(ls --version 2> /dev/null | head -n1)
+    echo $gnu_detected
+    if [[ "$gnu_detected" =~ GNU ]]; then
+        echo "GNU coreutils detected."
+                    echo "Symlinking uutils programs to /usr/local/bin"
+            for prog in $(/usr/bin/uutils-coreutils --list); do
+                sudo ln -sr /usr/bin/uutils-coreutils "/usr/local/bin/uutils-${prog}"
+                # Keep cp/mv/rm from GNU coreutils — uutils has unresolved TOCTOU issues.
+                # See projectbluefin/common#290.
+                case "${prog}" in
+                    cp|mv|rm) continue ;;
+                esac
+                sudo ln -sr "/usr/bin/uutils-coreutils" "/usr/local/bin/${prog}"
+            done
+    else
+        echo "Removing uutils symlinks."
+
+        for prog in $(/usr/bin/uutils-coreutils --list); do
+            sudo rm "/usr/local/bin/uutils-${prog}"
+            # Keep cp/mv/rm from GNU coreutils — uutils has unresolved TOCTOU issues.
+            # See projectbluefin/common#290.
+            case "${prog}" in
+                cp|mv|rm) continue ;;
+            esac
+            sudo rm "/usr/local/bin/${prog}"
+        done
+    fi
+
 # Configure docker and libvirt groups for development
 [group('System')]
 configure-dev-groups:
@@ -46,28 +74,6 @@ configure-dev-groups:
     done
 
     echo "Groups configured. Log out and back in for changes to take effect."
-
-# Example toggle command with user choice
-[group('System')]
-toggle-example-feature:
-    #!/usr/bin/bash
-    source /usr/lib/ujust/ujust.sh
-    echo "This is an example toggle command."
-    echo "Current status: [check your status here]"
-    OPTION=$(Choose "Enable" "Disable" "Cancel")
-    case "$OPTION" in
-        "Enable")
-            echo "Enabling feature..."
-            # Add your enable logic here
-            ;;
-        "Disable")
-            echo "Disabling feature..."
-            # Add your disable logic here
-            ;;
-        "Cancel")
-            echo "No changes made."
-            ;;
-    esac
 
 # Clean up container images and volumes
 [group('Maintenance')]
