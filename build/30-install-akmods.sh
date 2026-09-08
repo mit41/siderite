@@ -35,13 +35,48 @@ dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel
 dnf5 copr enable -y ublue-os/akmods
 
 # RPMFUSION Dependent AKMODS
-dnf5 -y install \
-    /tmp/akmods/kmods/*framework-laptop*.rpm
-dnf5 -y install \
-    https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
-    https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
+RPMFUSION_FREE_REPO=/etc/yum.repos.d/rpmfusion-free-build.repo
+RPMFUSION_NONFREE_REPO=/etc/yum.repos.d/rpmfusion-nonfree-build.repo
+
+cat > "${RPMFUSION_FREE_REPO}" <<'REPOEOF'
+[rpmfusion-free]
+name=RPM Fusion for Fedora $releasever - Free
+baseurl=https://download1.rpmfusion.org/free/fedora/releases/$releasever/Everything/$basearch/os/
+enabled=1
+metadata_expire=3d
+gpgcheck=0
+skip_if_unavailable=1
+
+[rpmfusion-free-updates]
+name=RPM Fusion for Fedora $releasever - Free - Updates
+baseurl=https://download1.rpmfusion.org/free/fedora/updates/$releasever/$basearch/
+enabled=1
+metadata_expire=3d
+gpgcheck=0
+skip_if_unavailable=1
+REPOEOF
+
+cat > "${RPMFUSION_NONFREE_REPO}" <<'REPOEOF'
+[rpmfusion-nonfree]
+name=RPM Fusion for Fedora $releasever - Nonfree
+baseurl=https://download1.rpmfusion.org/nonfree/fedora/releases/$releasever/Everything/$basearch/os/
+enabled=1
+metadata_expire=3d
+gpgcheck=0
+skip_if_unavailable=1
+
+[rpmfusion-nonfree-updates]
+name=RPM Fusion for Fedora $releasever - Nonfree - Updates
+baseurl=https://download1.rpmfusion.org/nonfree/fedora/updates/$releasever/$basearch/
+enabled=1
+metadata_expire=3d
+gpgcheck=0
+skip_if_unavailable=1
+REPOEOF
+
 dnf5 -y install \
     v4l2loopback /tmp/akmods/kmods/*v4l2loopback*.rpm
-dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
+
+rm -f "${RPMFUSION_FREE_REPO}" "${RPMFUSION_NONFREE_REPO}"
 
 dnf5 copr disable -y ublue-os/akmods
