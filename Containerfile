@@ -5,7 +5,7 @@ COPY custom /custom
 COPY system_files /system_files
 # Copy from OCI containers to distinct subdirectories to avoid conflicts
 # Note: Renovate can automatically update these :latest tags to SHA-256 digests for reproducibility
-COPY --from=ghcr.io/projectbluefin/common:latest@sha256:ceab3ed3f8f26f262ed9a602f9e509232f4759d54a2fcb6bc83670984e7f9bc7 /system_files /oci/common
+COPY --from=ghcr.io/projectbluefin/common:latest@sha256:39b8041fb0e88a0b001d8cddb168e841681e6db2f356dca45cdfc478a49c3a6b /system_files /oci/common
 COPY --from=ghcr.io/ublue-os/brew:latest@sha256:2aaf87e3757466bc28d056505a651c7ca5c56fd28f6ff709b34f3f5dbc860e89 /system_files /oci/brew
 COPY --from=ghcr.io/ublue-os/bluefin-wallpapers-gnome:latest@sha256:470572484d5b7b8f5ce422f8a7af4fbdbe66f6a7075a5ae425ce0658f3e3738c / /oci/artwork/bluefin
 
