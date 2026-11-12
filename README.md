@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> I'm no longer using this image because I moved to [RakuOS](https://rakuos.org/). This repository will be archived on November 30th.
+
 # siderite
 
 A ublue-os based image with [System76 cosmic desktop](https://github.com/pop-os/cosmic-epoch) installed. I'm a fan of the DE and the container based OS's built by the [universal blue](https://universal-blue.org/) project, so I tried putting all this awesome stuff into this image.
@@ -6,8 +9,8 @@ A ublue-os based image with [System76 cosmic desktop](https://github.com/pop-os/
 
 ## Usage
 
-[!WARNING]
-Use this image on your own risk. This image works for me and my usecase. It might not work for yours.
+> [!WARNING]
+> Use this image on your own risk. This image works for me and my usecase. It might not work for yours.
 
 I'm daily driving this image on my laptop and it works for me. If you want to try it yourself you can switch to this image by running:
 
